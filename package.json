@@ -1,0 +1,16 @@
+{
+  "name": "secretlab",
+  "version": "1.0.0",
+  "description": "Secret Lab FrontEnd",
+  "author": "HtunHtunHtet (Ryan)",
+  "private": true,
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.6.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "webpack-cli": "^4.10.0",
+    "webpack": "^5.74.0"
+  }
+}
