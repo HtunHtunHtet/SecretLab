@@ -1,94 +1,70 @@
-// let canvas = document.getElementById('myCanvas');
-// let canvasContext  = canvas.getContext("2d");
-// let images = [];
-// let canvasWidth = canvas.width;
-// let canvasHeight = canvas.height;
-//
-// window.devicePixelRatio=2; // better canvas resolution
-//
-// $(document).ready(function (){
-//     canvas.onmousedown = mouseDown;
-//
-//     /*** Upload function ***/
-//     $("#uploadBtn").on('change', function(e) {
-//         if(e.target.files) {
-//             let imageFile = e.target.files[0];
-//             let fileReader = new FileReader();
-//             fileReader.readAsDataURL(imageFile);
-//
-//             fileReader.onloadend = function (e) {
-//                 let newImage = new Image();
-//                 newImage.src = e.target.result;
-//                 images.push(newImage);
-//                 newImage.onload = function(ev) {
-//                     drawImage();
-//                 }
-//             }
-//         }
-//
-//
-//     });
-// })
-//
-// let drawImage = function () {
-//     for(let [index,image] of images.entries()) {
-//         canvasContext.drawFocusIfNeeded(image);
-//         //position and shrink
-//         canvasContext.drawImage(image, [index*200],[index*100], (image.width/5),(image.height/5));
-//     }
-// }
-
-// canvas related stuff
-var canvas=document.getElementById("myCanvas");
-var ctx=canvas.getContext("2d");
-var WIDTH = canvas.width;
-var HEIGHT = canvas.height;
-ctx.fillStyle = "#A0DCE5";
+// Canvas declaration
+let canvas=document.getElementById("myCanvas");
+let ctx=canvas.getContext("2d");
+let WIDTH = canvas.width;
+let HEIGHT = canvas.height;
+ctx.fillStyle = "#efefef";
 $myCanvas=$('#myCanvas');
 
-//drag
-var isDragging = false;
-var startX;
-var startY;
+//Dragging releated
+let isDragging = false;
+let startX;
+let startY;
 
-//array of image objects
-var images=[];
-var NUM_IMAGES=0;
+//Image related
+let images=[];
+let NUM_IMAGES=0;
 
-// queue up 4 test images
-addImage(20,20,0.50,'https://i.ytimg.com/vi/huVsdOZkeTc/hqdefault.jpg');
-addImage(240,20,0.50,'https://i.ytimg.com/vi/huVsdOZkeTc/hqdefault.jpg');
-addImage(20,220,0.50,'https://i.ytimg.com/vi/huVsdOZkeTc/hqdefault.jpg');
-// addImage(240,220,0.50,'https://dl.dropboxusercontent.com/u/139992952/stackoverflow/house204-4.jpg');
+$(document).ready(function (){
 
-// trigger all images to load
-for(var i=0;i<images.length;i++){
-    images[i].image.src=images[i].url;
-}
+    // Upload btn listener
+    $("#uploadBtn").on('change', function (e) {
+        if(e.target.files) {
+            let imageFile = e.target.files[0];
+            let fileReader = new FileReader();
+            fileReader.readAsDataURL(imageFile);
 
+            fileReader.onloadend = function (e) {
+                addImage(
+                    Math.floor(Math.random() * 500),
+                    Math.floor(Math.random()* 100),
+                    0.2,
+                    e.target.result // image url
+                );
 
-//////////////////////////////
-// functions
-//////////////////////////////
+                // Load image
+                for(let [index, image] of images.entries()){
+                    images[index].image.src=images[index].url;
+                }
 
-// queue up another image
-function addImage(x,y,scaleFactor,imgURL){
-    var img=new Image();
+            }
+        }
+    })
+});
+
+let addImage = function (x,y,scaleFactor,imgURL){
+    let img= new Image();
     img.crossOrigin='anonymous';
     img.onload=startInteraction;
-    images.push({image:img,x:x,y:y,scale:scaleFactor,isDragging:false,url:imgURL});
+    images.push({
+        image:img,
+        x:x,
+        y:y,
+        scale:scaleFactor,
+        isDragging:false,
+        url:imgURL,
+        text: null,
+    });
     NUM_IMAGES++;
+    console.log('images', images);
 }
 
-// called after each image fully loads
-function startInteraction() {
-
-    // return until all images are loaded
+let startInteraction = function () {
     if(--NUM_IMAGES>0){return;}
 
     // set all images width/height
-    for(var i=0;i<images.length;i++){
-        var img=images[i];
+    for(let i=0;i<images.length;i++){
+        let img=images[i];
         img.width=img.image.width*img.scale;
         img.height=img.image.height*img.scale;
     }
@@ -104,31 +80,31 @@ function startInteraction() {
 
 }
 
-// flood fill canvas and
-// redraw all images in their assigned positions
-function renderAll() {
+// redraw all images in their resppective positions
+let renderAll = function () {
     ctx.fillRect(0,0,WIDTH,HEIGHT);
-    for(var i=0;i<images.length;i++){
-        var r=images[i];
-        ctx.drawImage(r.image,r.x,r.y,r.width,r.height);
+
+    for (let image of images) {
+        ctx.drawImage(image.image,image.x,image.y,image.width,image.height);
+        ctx.font = '14px Arial';
+        ctx.strokeText("Hello World!", image.x+10, image.y+30);
     }
 }
 
 // handle mousedown events
-function onMouseDown(e){
-
+let onMouseDown = function (e){
     // tell browser we're handling this mouse event
     e.preventDefault();
     e.stopPropagation();
 
     //get current position
-    var mx=parseInt(e.clientX-$myCanvas.offset().left);
-    var my=parseInt(e.clientY-$myCanvas.offset().top);
+    let mx=parseInt(e.clientX-$myCanvas.offset().left);
+    let my=parseInt(e.clientY-$myCanvas.offset().top);
 
     //test to see if mouse is in 1+ images
     isDragging = false;
-    for(var i=0;i<images.length;i++){
-        var r=images[i];
+    for(let i=0;i<images.length;i++){
+        let r=images[i];
         if(mx>r.x && mx<r.x+r.width && my>r.y && my<r.y+r.height){
             //if true set r.isDragging=true
             r.isDragging=true;
@@ -148,32 +124,32 @@ function onMouseUp(e){
 
     // clear all the dragging flags
     isDragging = false;
-    for(var i=0;i<images.length;i++){
+    for(let i=0;i<images.length;i++){
         images[i].isDragging=false;
     }
 }
 
 // handle mousemove events
-function onMouseMove(e){
+let  onMouseMove = function(e){
 
     // do nothing if we're not dragging
     if(!isDragging){return;}
 
     //tell browser we're handling this mouse event
-    e.preventDefault
-    e.stopPropagation
+    e.preventDefault;
+    e.stopPropagation;
 
     //get current mouseposition
-    var mx = parseInt(e.clientX-$myCanvas.offset().left);
-    var my = parseInt(e.clientY-$myCanvas.offset().top);
+    let mx = parseInt(e.clientX-$myCanvas.offset().left);
+    let my = parseInt(e.clientY-$myCanvas.offset().top);
 
     //calculate how far the mouse has moved;
-    var dx = mx - startX;
-    var dy = my - startY;
+    let dx = mx - startX;
+    let dy = my - startY;
 
     //move each image by how far the mouse moved
-    for(var i=0;i<images.length;i++){
-        var r=images[i];
+    for(let i=0;i<images.length;i++){
+        let r=images[i];
         if(r.isDragging){
             r.x+=dx;
             r.y+=dy;
@@ -184,7 +160,6 @@ function onMouseMove(e){
     startX = mx;
     startY = my;
 
-    //re render the images
+    //re-render the images
     renderAll();
-
 }
