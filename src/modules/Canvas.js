@@ -16,6 +16,8 @@ let images=[];
 let NUM_IMAGES=0;
 
 $(document).ready(function (){
+    //init first load
+    // initFirstLoad();
 
     // Upload btn listener
     $("#uploadBtn").on('change', function (e) {
@@ -44,7 +46,7 @@ $(document).ready(function (){
 
 let addImage = function (x,y,scaleFactor,imgURL){
     let img= new Image();
-    img.crossOrigin='anonymous';
+    // img.crossOrigin='anonymous';
     img.onload=startInteraction;
     images.push({
         image:img,
@@ -53,7 +55,7 @@ let addImage = function (x,y,scaleFactor,imgURL){
         scale:scaleFactor,
         isDragging:false,
         url:imgURL,
-        text: null,
+        text: 'Default Text',
     });
     NUM_IMAGES++;
     console.log('images', images);
@@ -87,8 +89,20 @@ let renderAll = function () {
     for (let image of images) {
         ctx.drawImage(image.image,image.x,image.y,image.width,image.height);
         ctx.font = '14px Arial';
-        ctx.strokeText("Hello World!", image.x+10, image.y+30);
+        ctx.strokeText(image.text, image.x+10, image.y+30);
     }
+}
+
+let initFirstLoad = function () {
+    addImage(
+        Math.floor(Math.random() * 500),
+        Math.floor(Math.random()* 100),
+        0.2,
+        'base64'
+    );
+
+    localStorage.setItem('images', JSON.stringify(images));
+    renderAll();
 }
 
 // handle mousedown events
