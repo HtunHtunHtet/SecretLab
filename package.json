@@ -10,8 +10,10 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "webpack-cli": "^4.10.0",
-    "webpack": "^5.74.0"
+    "css-loader": "^6.7.1",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "scripts": {
     "build": "webpack"

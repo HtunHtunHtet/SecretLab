@@ -9,8 +9,17 @@ module.exports = {
     },
     plugins: [
         new webpack.ProvidePlugin({
+            // Can use either $ or jQuery , increase developer experience.
             $: 'jquery',
-            jQuery: 'jquery', //jquery
+            jQuery: 'jquery',
         })
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+            },
+        ],
+    },
 };
