@@ -131,7 +131,7 @@ let onMouseDown = function (e){
 }
 
 // handle mouseup and mouseout events
-function onMouseUp(e){
+let  onMouseUp = function (e){
     //tell browser we're handling this mouse event
     e.preventDefault();
     e.stopPropagation();
@@ -144,7 +144,7 @@ function onMouseUp(e){
 }
 
 // handle mousemove events
-let  onMouseMove = function(e){
+let onMouseMove = function(e){
 
     // do nothing if we're not dragging
     if(!isDragging){return;}
