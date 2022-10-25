@@ -15,12 +15,23 @@ let startY;
 let images=[];
 let NUM_IMAGES=0;
 
+
 $(document).ready(function (){
     //init first load
     // initFirstLoad();
 
-    // Upload btn listener
+    //hide all annotations first
+    hideAllAnnotations();
+
+    // Upload Image button listener
     $("#uploadBtn").on('change', function (e) {
+
+        //only allow five image to upload
+        if(images.length >= 5) {
+            alert('Only five image allow to upload for now');
+            return false;
+        }
+
         if(e.target.files) {
             let imageFile = e.target.files[0];
             let fileReader = new FileReader();
@@ -38,7 +49,16 @@ $(document).ready(function (){
                 for(let [index, image] of images.entries()){
                     images[index].image.src=images[index].url;
                 }
+            }
+        }
+    })
 
+    $(".annotation").on("keyup", function () {
+        for(let [index, image] in images) {
+            let triggerIndex = parseInt($(this).data('index'));
+            if (index == triggerIndex) {
+                images[index].text = $(this).val();
+                renderAll();
             }
         }
     })
@@ -86,17 +106,23 @@ let startInteraction = function () {
 let renderAll = function () {
     ctx.fillRect(0,0,WIDTH,HEIGHT);
 
-    for (let image of images) {
+    for (let [index,image] of images.entries()) {
         ctx.drawImage(image.image,image.x,image.y,image.width,image.height);
+
+        //add Text to the image
         ctx.font = '14px Arial';
         ctx.strokeText(image.text, image.x+10, image.y+30);
+
+        //add value into textbox
+        $("#annotationHolder"+index).show();
+        $("#annotation"+index).val(image.text);
     }
 }
 
 let initFirstLoad = function () {
     addImage(
         Math.floor(Math.random() * 500),
-        Math.floor(Math.random()* 100),
+        Math.floor(Math.random()* 300),
         0.2,
         'base64'
     );
@@ -176,4 +202,10 @@ let onMouseMove = function(e){
 
     //re-render the images
     renderAll();
+}
+
+let hideAllAnnotations = function () {
+    for (let i =0 ; i <=4  ; i ++) {
+        $("#annotationHolder"+i).hide();
+    }
 }
