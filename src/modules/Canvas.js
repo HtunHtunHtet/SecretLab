@@ -47,13 +47,10 @@ $(document).ready(function (){
 
                 // Load image
                 loadImages();
-                localStorage.setItem('images',JSON.stringify(images))
 
+                setImagesToBrowserLocalStorage();
             }
         }
-
-
-        console.log('uploaded images', images);
     })
 
     $(".annotation").on("keyup", function () {
@@ -61,13 +58,14 @@ $(document).ready(function (){
             let triggerIndex = parseInt($(this).data('index'));
             if (index == triggerIndex) {
                 images[index].text = $(this).val();
+                setImagesToBrowserLocalStorage();
                 renderAll();
             }
         }
     })
 });
 
-let addImage = function (x,y,scaleFactor,imgURL){
+let addImage = function (x,y,scaleFactor,imgURL, text='Default Text'){
     let img= new Image();
     img.onload=startInteraction;
 
@@ -78,7 +76,7 @@ let addImage = function (x,y,scaleFactor,imgURL){
         scale:scaleFactor,
         isDragging:false,
         url:imgURL,
-        text: 'Default Text',
+        text: text,
     });
     NUM_IMAGES++;
 
@@ -94,14 +92,15 @@ let initFirstLoad = function () {
                 localImage.x,
                 localImage.y,
                 localImage.scale,
-                localImage.url
+                localImage.url,
+                localImage.text
             );
         }
 
         // Load image
        loadImages();
 
-        renderAll();
+       renderAll();
     }
 }
 
@@ -212,6 +211,7 @@ let onMouseMove = function(e){
         if(r.isDragging){
             r.x+=dx;
             r.y+=dy;
+            setImagesToBrowserLocalStorage();
         }
     }
 
@@ -227,4 +227,8 @@ let hideAllAnnotations = function () {
     for (let i =0 ; i <=4  ; i ++) {
         $("#annotationHolder"+i).hide();
     }
+}
+
+let setImagesToBrowserLocalStorage = function () {
+    localStorage.setItem('images',JSON.stringify(images));
 }
