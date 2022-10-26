@@ -52,6 +52,9 @@ $(document).ready(function (){
 
                 //update tag
                 updateCurrentImageTag();
+
+                //reset the upload element
+                $("#uploadBtn").val('');
             }
         }
     })
@@ -62,8 +65,9 @@ $(document).ready(function (){
             let triggerIndex = parseInt($(this).data('index'));
             if (index == triggerIndex) {
                 images[index].text = $(this).val();
-
-                (images[index].isCurrent) && $(".selected-image").text($(this).val());
+               if (images[index].isCurrent) {
+                    $(".selected-image").text($(this).val());
+                }
 
                 setImagesToBrowserLocalStorage();
                 renderAll();
@@ -129,26 +133,24 @@ $(document).ready(function (){
         }
 
         //find the current selected index
-       let index = images.findIndex( image  => image.isCurrent)
+       let indexToDelete = images.findIndex( image  => image.isCurrent);
 
        //remove
-       images.splice(index,1);
+       images.splice(indexToDelete,1);
 
        //set current back to first of the image
        if (images.length > 0){
            images[0].isCurrent = true
        }
 
-       //hide textbox
-        debugger;
-        $("#annotationHolder"+index).hide();
-
        //update
        setImagesToBrowserLocalStorage();
        updateCurrentImageTag();
+       hideAllAnnotations();
+       showOnlyAvailableImages();
 
         //rerender
-        renderAll()
+        renderAll(true)
 
     });
 });
@@ -237,7 +239,7 @@ let loadImages = function () {
 }
 
 // redraw all images in their respective positions
-let renderAll = function () {
+let renderAll = function (preventRenderAnnotation = false) {
     ctx.fillRect(0,0,WIDTH,HEIGHT);
 
     for (let [index,image] of images.entries()) {
@@ -253,8 +255,11 @@ let renderAll = function () {
         }
 
         //add value into textbox
-        $("#annotationHolder"+index).show();
-        $("#annotation"+index).val(image.text);
+        if (!preventRenderAnnotation) {
+            $("#annotationHolder"+index).show();
+            $("#annotation"+index).val(image.text);
+        }
+
     }
 }
 
@@ -338,11 +343,12 @@ let hideAllAnnotations = function () {
     }
 }
 
-let setImagesToBrowserLocalStorage = function () {
-    localStorage.setItem('images',JSON.stringify(images));
+let showOnlyAvailableImages  = function (){
+    for (let [index, image] of images.entries()) {
+        $("#annotationHolder"+index).show();
+    }
 }
 
-let getImagesFromBrowserLocalStorage = function ()
-{
-    return JSON.parse(localStorage.getItem('images'));
+let setImagesToBrowserLocalStorage = function () {
+    localStorage.setItem('images',JSON.stringify(images));
 }
