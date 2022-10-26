@@ -97,7 +97,7 @@ $(document).ready(function (){
                 //set earlier index to true but must be greater than index zero
                 ? images[currentImageIndex-1].isCurrent = true
                 : null
-            //set next index to true if it is next btn, and must not be more than current array
+            //set next index to true if it is next btn
             : images[currentImageIndex+1].isCurrent = true;
 
         //update html tags
@@ -150,7 +150,7 @@ $(document).ready(function (){
        showOnlyAvailableImages();
 
         //rerender
-        renderAll(true)
+        renderAll(true);
 
     });
 });
