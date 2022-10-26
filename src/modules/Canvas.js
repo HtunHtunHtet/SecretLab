@@ -62,6 +62,9 @@ $(document).ready(function (){
             let triggerIndex = parseInt($(this).data('index'));
             if (index == triggerIndex) {
                 images[index].text = $(this).val();
+
+                (images[index].isCurrent) && $(".selected-image").text($(this).val());
+
                 setImagesToBrowserLocalStorage();
                 renderAll();
             }
@@ -88,6 +91,9 @@ $(document).ready(function (){
 
        // update current html tag
         updateCurrentImageTag();
+
+        //re render
+        renderAll();
     });
 });
 
@@ -139,6 +145,7 @@ let updateCurrentImageTag = function () {
     //find current index
     let currentImageIndex = images.findIndex( image  => image.isCurrent);
     $(".current-image-index").text(currentImageIndex+1);
+    $(".selected-image").text(images[currentImageIndex].text);
 }
 
 let startInteraction = function () {
@@ -179,6 +186,11 @@ let renderAll = function () {
         //add Text to the image
         ctx.font = '14px Arial';
         ctx.strokeText(image.text, image.x+10, image.y+30);
+
+        //add border if it is currently selected
+        if(image.isCurrent) {
+            ctx.strokeRect(image.x, image.y,image.width,image.height);
+        }
 
         //add value into textbox
         $("#annotationHolder"+index).show();
