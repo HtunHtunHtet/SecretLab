@@ -17,7 +17,7 @@ let NUM_IMAGES=0;
 
 $(document).ready(function (){
     // init first load
-     initFirstLoad();
+    initFirstLoad();
 
     //hide all annotations first
     hideAllAnnotations();
@@ -39,7 +39,7 @@ $(document).ready(function (){
             fileReader.onloadend = function (e) {
                 addImage(
                     Math.floor(Math.random() * 500),
-                    Math.floor(Math.random()* 100),
+                    Math.floor(Math.random()* 500),
                     0.2,
                     e.target.result // image url
                 );
@@ -50,8 +50,8 @@ $(document).ready(function (){
                 // set local storage
                 setImagesToBrowserLocalStorage();
 
-                //update total
-                $(".total-uploaded").text(images.length);
+                //update tag
+                updateCurrentImageTag();
             }
         }
     })
@@ -71,6 +71,7 @@ $(document).ready(function (){
         }
     })
 
+    //handle action btn
     $(".action-btn").on("click",function (e) {
         e.preventDefault();
         let action = $(this).data('action');
@@ -78,22 +79,77 @@ $(document).ready(function (){
         //find current index
         let currentImageIndex = images.findIndex( image  => image.isCurrent);
 
+        if (currentImageIndex === images.length-1 && "next" === action ) {
+            return false;
+        }
+
         //set isCurrent to false
-        images[currentImageIndex].isCurrent = false;
+        if (currentImageIndex >= 0 && currentImageIndex < images.length ) {
+            images[currentImageIndex].isCurrent = false;
+        }
 
         ("back" === action)
-            ? (currentImageIndex >= 0 )
+            ? (currentImageIndex > 0 )
                 //set earlier index to true but must be greater than index zero
                 ? images[currentImageIndex-1].isCurrent = true
                 : null
-            //set next index to true if it is next btn
+            //set next index to true if it is next btn, and must not be more than current array
             : images[currentImageIndex+1].isCurrent = true;
 
-       // update current html tag
-        updateCurrentImageTag();
+        //update html tags
+        if (currentImageIndex >= 0 && currentImageIndex < images.length) {
+            updateCurrentImageTag();
+        }
 
-        //re render
+        //re-render
         renderAll();
+    });
+
+    //clear annotation
+    $(".clear-annotation").on("click", function (e){
+       e.preventDefault();
+       let index = $(this).data('index');
+
+       images[index].text = '';
+       $(this).val('');
+
+       //save to local storage
+        setImagesToBrowserLocalStorage();
+
+        //re-render
+        renderAll();
+    });
+
+    //handle delete selected image
+    $("#delete-selected-btn").on("click", function (e){
+        e.preventDefault();
+        if (images.length <= 0) {
+            alert ('there is nothing to delete');
+            return false;
+        }
+
+        //find the current selected index
+       let index = images.findIndex( image  => image.isCurrent)
+
+       //remove
+       images.splice(index,1);
+
+       //set current back to first of the image
+       if (images.length > 0){
+           images[0].isCurrent = true
+       }
+
+       //hide textbox
+        debugger;
+        $("#annotationHolder"+index).hide();
+
+       //update
+       setImagesToBrowserLocalStorage();
+       updateCurrentImageTag();
+
+        //rerender
+        renderAll()
+
     });
 });
 
@@ -101,6 +157,7 @@ let addImage = function (x,y,scaleFactor,imgURL, text='Default Text'){
     let img= new Image();
     img.onload=startInteraction;
 
+    //this is action as a state in this application, in react we could put it into state
     images.push({
         image:img,
         x:x,
@@ -116,7 +173,7 @@ let addImage = function (x,y,scaleFactor,imgURL, text='Default Text'){
 
 let initFirstLoad = function () {
     let localStorageImages = JSON.parse(localStorage.getItem('images'));
-    console.log("local storage images",localStorageImages);
+
     if (null !== localStorageImages) {
         for ( let localImage of localStorageImages) {
             addImage(
@@ -145,7 +202,10 @@ let updateCurrentImageTag = function () {
     //find current index
     let currentImageIndex = images.findIndex( image  => image.isCurrent);
     $(".current-image-index").text(currentImageIndex+1);
-    $(".selected-image").text(images[currentImageIndex].text);
+    $(".total-uploaded").text(images.length);
+    if (currentImageIndex >=0){
+        $(".selected-image").text(images[currentImageIndex].text);
+    }
 }
 
 let startInteraction = function () {
@@ -224,7 +284,7 @@ let onMouseDown = function (e){
 }
 
 // handle mouseup and mouseout events
-let  onMouseUp = function (e){
+let onMouseUp = function (e){
     //tell browser we're handling this mouse event
     e.preventDefault();
     e.stopPropagation();

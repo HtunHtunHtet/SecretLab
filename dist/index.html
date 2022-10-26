@@ -15,14 +15,17 @@
                     <canvas id="myCanvas" width="1024" height="768"></canvas>
                 </div>
                 <div class="form-container container">
-                    <div class="selected-image"></div>
+                    <div><strong>Selected image name:</strong> <span class="selected-image"></span></div>
                     <div>
                         <div style="padding-bottom:10px;display: flex; justify-content: space-around">
                             <a href="#" id="back-image-btn" class="action-btn" data-action="back">Back</a>
                             <i> <span class="current-image-index">0</span> of <span class="total-uploaded">0</span></i>
                             <a href="#" id="next-image-btn" class="action-btn" data-action="next">Next</a>
                         </div>
+                        <button id="delete-selected-btn">Delete Selected Image </button>
                         <input type="file" id="uploadBtn" name="Upload File" accept ="image/*">
+
+
                     </div>
                 </div>
                 <div class="information-container container">
@@ -33,7 +36,7 @@
                                 <input type="text" id="annotation0" data-index="0"  value="" class="annotation">
                             </div>
                             <div class="delete-btn-holder">
-                                <a href="#" >Delete</a>
+                                <a href="#" class="clear-annotation" data-index="0">Clear</a>
                             </div>
                         </div>
 
@@ -45,7 +48,7 @@
                                 <input type="text" id="annotation1" data-index="1"  value="" class="annotation">
                             </div>
                             <div class="delete-btn-holder">
-                                <a href="#" >Delete</a>
+                                <a href="#" class="clear-annotation" data-index="1">Clear</a>
                             </div>
                         </div>
                     </div>
@@ -56,7 +59,7 @@
                                 <input type="text" id="annotation2" data-index="2"  value="" class="annotation">
                             </div>
                             <div class="delete-btn-holder">
-                                <a href="#" >Delete</a>
+                                <a href="#" class="clear-annotation" data-index="2">Clear</a>
                             </div>
                         </div>
                     </div>
@@ -67,7 +70,7 @@
                                 <input type="text" id="annotation3" data-index="3"  value="" class="annotation">
                             </div>
                             <div class="delete-btn-holder">
-                                <a href="#" >Delete</a>
+                                <a href="#" class="clear-annotation" data-index="3">Clear</a>
                             </div>
                         </div>
                     </div>
@@ -78,7 +81,7 @@
                                 <input type="text" id="annotation4" data-index="4" value="" class="annotation">
                             </div>
                             <div class="delete-btn-holder">
-                                <a href="#" >Delete</a>
+                                <a href="#" class="clear-annotation" data-index="4">Clear</a>
                             </div>
                         </div>
                     </div>
