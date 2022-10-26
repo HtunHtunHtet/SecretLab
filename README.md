@@ -21,8 +21,8 @@ Once you cloned this repo, you can use following command to download require ass
 npm install
 ```
 
-### How to bundle (export) the file after making changes
-By default, when you make changes in `Canvas.js`, `index.js`, `reset.css` and `style.scss`, you will not see the instance update.
+### Accessing Development Environment
+By default, when you make changes in `Canvas.js`, `index.js`, `reset.css` and `style.scss`, you will not see the instance update in your browser.
 The files that is accessed by `dist/index.html`, which is `dist/main.js`, is exported by following configuration of webpack.
 
 ```js
@@ -38,3 +38,18 @@ npm run build
 ```
 If you see the following output, then it is successfully bundled and exported. 
 ![](src/readme-assets/build-success.png)
+
+### Project Structure Overview
+    .
+    ├── dist                    # Compiled files
+    ├── node_modules            # You will see this after you perform `npm install`
+    ├── src                     # Source files
+    ├── tools                   # Tools and utilities
+    ├── .gitignore
+    ├── .package.json
+    ├── .package-lock.json
+    ├──  README.md
+    └── webpack.config.js       # Webpack configuraiton
+
+
+## Features
