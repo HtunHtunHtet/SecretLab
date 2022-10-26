@@ -28,7 +28,7 @@ The files that is accessed by `dist/index.html`, which is `dist/main.js`, is exp
 ```js
 output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist')
 },
 ```
 After you make any changes in `Canvas.js`, `index.js`, `reset.css` and `style.scss`, please run following command to export the assets
@@ -44,12 +44,13 @@ If you see the following output, then it is successfully bundled and exported.
     ├── dist                    # Compiled files
     ├── node_modules            # You will see this after you perform `npm install`
     ├── src                     # Source files
-    ├── tools                   # Tools and utilities
+    ├──── css                   # Source files
+    ├──── modules               # All releated modules
+    ├──── index.js              # This is where all module are bind together
     ├── .gitignore
     ├── .package.json
     ├── .package-lock.json
     ├──  README.md
     └── webpack.config.js       # Webpack configuraiton
-
 
 ## Features
