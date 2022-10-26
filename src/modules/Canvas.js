@@ -6,7 +6,7 @@ let HEIGHT = canvas.height;
 ctx.fillStyle = "#efefef";
 $myCanvas=$('#myCanvas');
 
-//Dragging releated
+//Dragging related
 let isDragging = false;
 let startX;
 let startY;
@@ -14,7 +14,6 @@ let startY;
 //Image related
 let images=[];
 let NUM_IMAGES=0;
-
 
 $(document).ready(function (){
     // init first load
@@ -48,11 +47,16 @@ $(document).ready(function (){
                 // Load image
                 loadImages();
 
+                // set local storage
                 setImagesToBrowserLocalStorage();
+
+                //update total
+                $(".total-uploaded").text(images.length);
             }
         }
     })
 
+    //handling changing annotation
     $(".annotation").on("keyup", function () {
         for(let [index, image] in images) {
             let triggerIndex = parseInt($(this).data('index'));
@@ -63,6 +67,28 @@ $(document).ready(function (){
             }
         }
     })
+
+    $(".action-btn").on("click",function (e) {
+        e.preventDefault();
+        let action = $(this).data('action');
+
+        //find current index
+        let currentImageIndex = images.findIndex( image  => image.isCurrent);
+
+        //set isCurrent to false
+        images[currentImageIndex].isCurrent = false;
+
+        ("back" === action)
+            ? (currentImageIndex >= 0 )
+                //set earlier index to true but must be greater than index zero
+                ? images[currentImageIndex-1].isCurrent = true
+                : null
+            //set next index to true if it is next btn
+            : images[currentImageIndex+1].isCurrent = true;
+
+       // update current html tag
+        updateCurrentImageTag();
+    });
 });
 
 let addImage = function (x,y,scaleFactor,imgURL, text='Default Text'){
@@ -77,10 +103,9 @@ let addImage = function (x,y,scaleFactor,imgURL, text='Default Text'){
         isDragging:false,
         url:imgURL,
         text: text,
+        isCurrent: images.length === 0
     });
     NUM_IMAGES++;
-
-    console.log('added images', images) ;
 }
 
 let initFirstLoad = function () {
@@ -96,12 +121,24 @@ let initFirstLoad = function () {
                 localImage.text
             );
         }
-
         // Load image
        loadImages();
 
+        //render image
        renderAll();
+
+       //update total
+       $(".total-uploaded").text(images.length);
+
+       //update current image
+        updateCurrentImageTag();
     }
+}
+
+let updateCurrentImageTag = function () {
+    //find current index
+    let currentImageIndex = images.findIndex( image  => image.isCurrent);
+    $(".current-image-index").text(currentImageIndex+1);
 }
 
 let startInteraction = function () {
@@ -231,4 +268,9 @@ let hideAllAnnotations = function () {
 
 let setImagesToBrowserLocalStorage = function () {
     localStorage.setItem('images',JSON.stringify(images));
+}
+
+let getImagesFromBrowserLocalStorage = function ()
+{
+    return JSON.parse(localStorage.getItem('images'));
 }

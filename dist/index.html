@@ -15,13 +15,14 @@
                     <canvas id="myCanvas" width="1024" height="768"></canvas>
                 </div>
                 <div class="form-container container">
-                    <div>
+                    <div class="selected image">
                         Image 1
                     </div>
                     <div>
                         <div style="padding-bottom:10px;display: flex; justify-content: space-around">
-                            <a href="#">Back</a>
-                            <a href="#">Next</a>
+                            <a href="#" id="back-image-btn" class="action-btn" data-action="back">Back</a>
+                            <i> <span class="current-image-index">0</span> of <span class="total-uploaded">0</span></i>
+                            <a href="#" id="next-image-btn" class="action-btn" data-action="next">Next</a>
                         </div>
                         <input type="file" id="uploadBtn" name="Upload File" accept ="image/*">
                     </div>
