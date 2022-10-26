@@ -10,11 +10,11 @@
             <div class="best-work">
                 <h1>This feature is support only 1030px</h1>
             </div>
-            <article class="item-page" itemscope="" itemtype="https://schema.org/Article">
+            <div class="item-page">
                 <div class="canvas-container">
                     <canvas id="myCanvas" width="1024" height="768"></canvas>
                 </div>
-                <div class="form-container">
+                <div class="form-container container">
                     <div>
                         Image 1
                     </div>
@@ -22,32 +22,66 @@
                         <input type="file" id="uploadBtn" name="Upload File" accept ="image/*">
                     </div>
                 </div>
-                <div class="information-container">
-                    <div class="annotations-container">
-                        <div id="annotationHolder0" class="annotation">
-                            <label for="annotation0" id="annotation0-label">Label 1</label>
-                            <input type="text" id="annotation0" data-index="0"  value="">
-                        </div>
-                        <div id="annotationHolder1" class="annotation">
-                            <label for="annotation0" id="annotation1-label">Label 2</label>
-                            <input type="text" id="annotation1" data-index="1"  value="">
-                        </div>
-                        <div id="annotationHolder2" class="annotation">
-                            <label for="annotation0" id="annotation2-label">Label 3</label>
-                            <input type="text" id="annotation2" data-index="2"  value="">
-                        </div>
-                        <div id="annotationHolder3" class="annotation">
-                            <label for="annotation0" id="annotation3-label">Label 4</label>
-                            <input type="text" id="annotation3" data-index="3"  value="">
-                        </div>
-                        <div id="annotationHolder4" class="annotation">
-                            <label for="annotation0" id="annotation4-label">Label 5</label>
-                            <input type="text" id="annotation4" data-index="4" value="">
+                <div class="information-container container">
+                    <div id="annotationHolder0">
+                        <label for="annotation0" id="annotation0-label">Label 1</label>
+                        <div class="annotation-input-holder">
+                            <div>
+                                <input type="text" id="annotation0" data-index="0"  value="" class="annotation">
+                            </div>
+                            <div class="delete-btn-holder">
+                                <a href="#" >Delete</a>
+                            </div>
                         </div>
 
                     </div>
+                    <div id="annotationHolder1" class="annotation">
+                        <label for="annotation1" id="annotation1-label">Label 2</label>
+                        <div class="annotation-input-holder">
+                            <div>
+                                <input type="text" id="annotation1" data-index="1"  value="" class="annotation">
+                            </div>
+                            <div class="delete-btn-holder">
+                                <a href="#" >Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="annotationHolder2" class="annotation">
+                        <label for="annotation2" id="annotation2-label">Label 3</label>
+                        <div class="annotation-input-holder">
+                            <div>
+                                <input type="text" id="annotation2" data-index="2"  value="" class="annotation">
+                            </div>
+                            <div class="delete-btn-holder">
+                                <a href="#" >Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="annotationHolder3" class="annotation">
+                        <label for="annotation3" id="annotation3-label">Label 4</label>
+                        <div class="annotation-input-holder">
+                            <div>
+                                <input type="text" id="annotation3" data-index="3"  value="" class="annotation">
+                            </div>
+                            <div class="delete-btn-holder">
+                                <a href="#" >Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="annotationHolder4" class="annotation">
+                        <label for="annotation4" id="annotation4-label">Label 5</label>
+                        <div class="annotation-input-holder">
+                            <div>
+                                <input type="text" id="annotation4" data-index="4" value="" class="annotation">
+                            </div>
+                            <div class="delete-btn-holder">
+                                <a href="#" >Delete</a>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            </article>
+            </div>
         </div>
 
     <script src="main.js"></script>

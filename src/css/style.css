@@ -9,35 +9,30 @@ body {
 
 #myCanvas {
     border: 1px solid black;
-    /*min-width: 1024px;*/
-    /*min-height: 768px;*/
-    /*min-width: 100%;*/
-    /*min-height: 100%;*/
-    margin-top: 4vw;
 }
 
-article {
-    background-color: #fdfdfd;
-    min-height: 500px;
-    color: #333;
-    width: 100%;
-    margin-bottom: 3vw;
+.main-content {
+    max-width:1200px;
+    margin: 0 auto;
 }
 
 .canvas-container {
     text-align: center;
+    background: #e7e7e7;
 }
 
-.annotations-container {
+.information-container {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
-    padding: 25px;
 }
 
-.annotations-container  > div {
+.container {
+    width: 90%; /* decide container width for entire app */
+}
+
+.information-container > div  {
     width: 100%;
-    padding-top:2vh;
+    padding-top:15px;
 }
 
 .best-work {
@@ -47,13 +42,42 @@ article {
 }
 
 .form-container {
-    width: 100%;
+    /*width: 94%;*/
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    /* padding: 10px 0 3vw 5vw; */
-    /* text-align: center; */
-    margin: 25px;
+    padding: 20px 0 20px 0;
+    border-bottom: 1px dashed;
+}
+
+.item-page {
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px 25px;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 8px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.annotation-input-holder {
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.delete-btn-holder {
+    padding:20px;
+}
+
+.annotation-input-holder > div:first-child {
+    width: 50%;
 }
 
 @media screen and (max-width: 1030px) {
