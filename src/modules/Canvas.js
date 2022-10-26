@@ -17,8 +17,8 @@ let NUM_IMAGES=0;
 
 
 $(document).ready(function (){
-    //init first load
-    // initFirstLoad();
+    // init first load
+     initFirstLoad();
 
     //hide all annotations first
     hideAllAnnotations();
@@ -28,7 +28,7 @@ $(document).ready(function (){
 
         //only allow five image to upload
         if(images.length >= 5) {
-            alert('Only five image allow to upload for now');
+            alert('Only five images allow to upload for now for the best performance');
             return false;
         }
 
@@ -46,11 +46,14 @@ $(document).ready(function (){
                 );
 
                 // Load image
-                for(let [index, image] of images.entries()){
-                    images[index].image.src=images[index].url;
-                }
+                loadImages();
+                localStorage.setItem('images',JSON.stringify(images))
+
             }
         }
+
+
+        console.log('uploaded images', images);
     })
 
     $(".annotation").on("keyup", function () {
@@ -66,8 +69,8 @@ $(document).ready(function (){
 
 let addImage = function (x,y,scaleFactor,imgURL){
     let img= new Image();
-    // img.crossOrigin='anonymous';
     img.onload=startInteraction;
+
     images.push({
         image:img,
         x:x,
@@ -78,7 +81,28 @@ let addImage = function (x,y,scaleFactor,imgURL){
         text: 'Default Text',
     });
     NUM_IMAGES++;
-    console.log('images', images);
+
+    console.log('added images', images) ;
+}
+
+let initFirstLoad = function () {
+    let localStorageImages = JSON.parse(localStorage.getItem('images'));
+    console.log("local storage images",localStorageImages);
+    if (null !== localStorageImages) {
+        for ( let localImage of localStorageImages) {
+            addImage(
+                localImage.x,
+                localImage.y,
+                localImage.scale,
+                localImage.url
+            );
+        }
+
+        // Load image
+       loadImages();
+
+        renderAll();
+    }
 }
 
 let startInteraction = function () {
@@ -102,7 +126,14 @@ let startInteraction = function () {
 
 }
 
-// redraw all images in their resppective positions
+// Load image to "image" variable
+let loadImages = function () {
+    for(let [index, image] of images.entries()){
+        images[index].image.src=images[index].url;
+    }
+}
+
+// redraw all images in their respective positions
 let renderAll = function () {
     ctx.fillRect(0,0,WIDTH,HEIGHT);
 
@@ -117,18 +148,6 @@ let renderAll = function () {
         $("#annotationHolder"+index).show();
         $("#annotation"+index).val(image.text);
     }
-}
-
-let initFirstLoad = function () {
-    addImage(
-        Math.floor(Math.random() * 500),
-        Math.floor(Math.random()* 300),
-        0.2,
-        'base64'
-    );
-
-    localStorage.setItem('images', JSON.stringify(images));
-    renderAll();
 }
 
 // handle mousedown events
