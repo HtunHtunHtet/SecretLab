@@ -6,7 +6,7 @@ This assignment is backed by webpack which is a module bundler for javascript.
 
 ## Bundling the project
 ### Prerequisite
-You will need use npm to download the require node module. As per requirement, this technical test is depended on only two packages as follow: 
+You will need use npm to download the require node module. As per requirement, this technical test is depended on only two packages, which are: 
 
 ```js
 "dependencies": {
@@ -15,7 +15,7 @@ You will need use npm to download the require node module. As per requirement, t
   }
 ```
 
-Once you cloned this repo, you can use following command to download require assets
+Once you cloned this repository, you can use following command to download require assets
 
 ```shell
 npm install
@@ -57,7 +57,9 @@ If you see the following output, then it is successfully bundled and exported.
 
 ## Features
 ### Local Storage Implementation
-
+- The application is tightly tied with browser side storage, (i.e) local storage.
+- Because of this, when a user makes changes in the current session and reloads the page, it will automatically retrieve the last state of images. This includes changes to annotations and positions.
+![](readme-assets/local-storage.gif)
 
 ### Upload and drag photos
 ![Upload and drag](readme-assets/Upload-and-drag.gif)
@@ -69,11 +71,18 @@ If you see the following output, then it is successfully bundled and exported.
 - This viewport limited to perform 1030px and above for maximum performance.
 
 ### Alter Image Annotations
-![](readme-assets/Change annotation.gif)
+![](readme-assets/change-annotation.gif)
 - Allow user to alter the annotation for each image.
 ![](readme-assets/alter-annotation.gif)
 - Allow user to clear the annotation for each image
 
 ### Deletable
 ![](readme-assets/deleteable.gif)
--Allow User to delete the selected image
+- Allow User to delete the selected image.
+- If there is nothing to delete, it will prompt an alert
+
+### Limitations
+
+- When image are overlap each other , it is hard to detect which image is dragging. The javascript need to detect the overlapping and intersection points for images
+- If we handle the canvas from css, the image is distorted. Because of that the canvas size is fixed at 1024. 
+- It is the best that if we can implement the unit testing with frontend test framework , like jest.
