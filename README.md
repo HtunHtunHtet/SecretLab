@@ -37,12 +37,14 @@ After you make any changes in `Canvas.js`, `index.js`, `reset.css` and `style.sc
 npm run build
 ```
 If you see the following output, then it is successfully bundled and exported. 
-![](src/readme-assets/build-success.png)
+![](readme-assets/build-success.png)
 
 ### Project Structure Overview
     .
     ├── dist                    # Compiled files
-    ├── node_modules            # You will see this after you perform `npm install`
+    ├──── images                # Images for testing and development purpose. You can use this to test as well.
+    ├── node_modules            # You will see this after you performed `npm install`
+    ├── readme-access           # Read me assets
     ├── src                     # Source files
     ├──── css                   # Source files
     ├──── modules               # All releated modules
@@ -54,3 +56,14 @@ If you see the following output, then it is successfully bundled and exported.
     └── webpack.config.js       # Webpack configuraiton
 
 ## Features
+### Upload  and drag photos
+![Upload and drag](readme-assets/Upload-and-drag.gif)
+User can upload photo and drag around the canvas
+
+### Draggable images
+
+### Change Annotations
+
+### Saving data in local storage
+
+### Deletable
