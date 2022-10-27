@@ -56,14 +56,24 @@ If you see the following output, then it is successfully bundled and exported.
     └── webpack.config.js       # Webpack configuraiton
 
 ## Features
-### Upload  and drag photos
+### Local Storage Implementation
+
+
+### Upload and drag photos
 ![Upload and drag](readme-assets/Upload-and-drag.gif)
-User can upload photo and drag around the canvas
+- User can upload photo and drag around the canvas. To maximise the performance, it only allow <b>five</b> photos to upload.
+- User can drag and drop the photos around the canvas
 
-### Draggable images
+### Handling for different screen size
+![](readme-assets/screen-limit.gif)
+- This viewport limited to perform 1030px and above for maximum performance.
 
-### Change Annotations
-
-### Saving data in local storage
+### Alter Image Annotations
+![](readme-assets/Change annotation.gif)
+- Allow user to alter the annotation for each image.
+![](readme-assets/alter-annotation.gif)
+- Allow user to clear the annotation for each image
 
 ### Deletable
+![](readme-assets/deleteable.gif)
+-Allow User to delete the selected image
