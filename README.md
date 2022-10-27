@@ -22,8 +22,7 @@ npm install
 ```
 
 ### Accessing Development Environment
-By default, when you make changes in `Canvas.js`, `index.js`, `reset.css` and `style.scss`, you will not see the instance update in your browser.
-The files that is accessed by `dist/index.html`, which is `dist/main.js`, is exported by following configuration of webpack.
+By default, when you make changes in `Canvas.js`, `index.js`, `reset.css` and `style.scss`, you will not see the instance update in your browser. The files that are accessed by `dist/index.html`, which is `dist/main.js`, is exported by webpack.
 
 ```js
 output: {
@@ -37,6 +36,7 @@ After you make any changes in `Canvas.js`, `index.js`, `reset.css` and `style.sc
 npm run build
 ```
 If you see the following output, then it is successfully bundled and exported. 
+
 ![](readme-assets/build-success.png)
 
 ### Project Structure Overview
@@ -76,13 +76,13 @@ If you see the following output, then it is successfully bundled and exported.
 ![](readme-assets/alter-annotation.gif)
 - Allow user to clear the annotation for each image
 
-### Deletable
+### Delete Images
 ![](readme-assets/deleteable.gif)
 - Allow User to delete the selected image.
-- If there is nothing to delete, it will prompt an alert
+- If there is nothing to delete, it will prompt an alert.
 
 ### Limitations
 
 - When image are overlap each other , it is hard to detect which image is dragging. The javascript need to detect the overlapping and intersection points for images
-- If we handle the canvas from css, the image is distorted. Because of that the canvas size is fixed at 1024. 
+- If we handle the canvas from css, the image is distorted. Because of that the canvas size is fixed at 1024px. In order to resolve this, we have to calculate the screensize from javascript and update the width and height of the canvas accordingly.
 - It is the best that if we can implement the unit testing with frontend test framework , like jest.
